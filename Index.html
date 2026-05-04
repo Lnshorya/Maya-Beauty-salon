@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Maya Beauty Salon – Experience the Art of Beauty</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<style>
+  :root {
+    --rose:    #c9906a;
+    --rose-dark: #a06845;
+    --cream:   #fdf7f0;
+    --warm:    #f5ede3;
+    --charcoal:#2b2320;
+    --muted:   #7a6358;
+    --gold:    #d4aa70;
+    --white:   #ffffff;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--charcoal);
+    overflow-x: hidden;
+  }
+
+  /* ── CURSOR ── */
+  .cursor { width:12px; height:12px; background:var(--rose); border-radius:50%; position:fixed; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:transform .15s ease, width .2s, height .2s; }
+  .cursor-ring { width:36px; height:36px; border:1.5px solid var(--rose); border-radius:50%; position:fixed; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:transform .35s ease; opacity:.6; }
+
+  /* ── PRELOADER ── */
+  #preloader { position:fixed; inset:0; background:var(--charcoal); z-index:9000; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:16px; transition:opacity .6s ease; }
+  #preloader .logo-pre { font-family:'Cormorant Garamond',serif; font-size:3rem; color:var(--cream); letter-spacing:.3em; opacity:0; animation:fadeUp .8s .2s forwards; }
+  #preloader .bar { width:120px; height:1px; background:rgba(255,255,255,.2); position:relative; overflow:hidden; }
+  #preloader .bar::after { content:''; position:absolute; left:0; top:0; height:100%; width:0; background:var(--gold); animation:loadBar 1.4s .5s ease forwards; }
+  @keyframes loadBar { to { width:100%; } }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+  #preloader.hide { opacity:0; pointer-events:none; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 1000;
+    padding: 20px 60px;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: background .4s, padding .4s, box-shadow .4s;
+  }
+  nav.scrolled {
+    background: rgba(253,247,240,.96);
+    backdrop-filter: blur(12px);
+    padding: 14px 60px;
+    box-shadow: 0 2px 30px rgba(43,35,32,.08);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.7rem; font-weight: 300; letter-spacing: .2em;
+    color: var(--white); text-decoration: none;
+    transition: color .3s;
+  }
+  nav.scrolled .nav-logo { color: var(--charcoal); }
+  .nav-logo span { color: var(--gold); }
+
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    font-size: .8rem; letter-spacing: .18em; text-transform: uppercase;
+    color: rgba(255,255,255,.85); text-decoration: none;
+    position: relative; transition: color .3s;
+  }
+  nav.scrolled .nav-links a { color: var(--muted); }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 1px; background: var(--rose);
+    transition: width .3s ease;
+  }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-links a:hover { color: var(--rose); }
+
+  .nav-cta {
+    padding: 10px 26px;
+    border: 1px solid rgba(255,255,255,.5);
+    color: var(--white); font-size: .8rem; letter-spacing: .15em;
+    text-transform: uppercase; text-decoration: none;
+    transition: all .3s;
+  }
+  nav.scrolled .nav-cta { border-color: var(--rose); color: var(--rose); }
+  .nav-cta:hover { background: var(--rose); color: var(--white) !important; border-color: var(--rose); }
+
+  /* hamburger */
+  .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:4px; }
+  .hamburger span { display:block; width:24px; height:1.5px; background:var(--white); transition:all .3s; }
+  nav.scrolled .hamburger span { background:var(--charcoal); }
+
+  /* ── HERO ── */
+  #hero {
+    height: 100vh; min-height: 640px;
+    background: linear-gradient(135deg, #2b2320 0%, #3d2f28 40%, #5a3e34 70%, #7a5444 100%);
+    position: relative; overflow: hidden;
+    display: flex; align-items: center;
+  }
+  #hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='600' height='600' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: .5;
+  }
+  /* decorative circles */
+  .hero-circle { position:absolute; border-radius:50%; }
+  .hc1 { width:500px; height:500px; border:1px solid rgba(212,170,112,.15); top:-100px; right:-80px; }
+  .hc2 { width:350px; height:350px; border:1px solid rgba(212,170,112,.1); top:50px; right:70px; }
+  .hc3 { width:200px; height:200px; background:radial-gradient(circle, rgba(201,144,106,.12) 0%, transparent 70%); bottom:100px; left:80px; }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    padding: 0 80px; max-width: 700px;
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-size: .72rem; letter-spacing: .3em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 28px;
+    opacity: 0; animation: fadeUp .8s .8s forwards;
+  }
+  .hero-tag::before { content:''; display:block; width:32px; height:1px; background:var(--gold); }
+  .hero-h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-weight: 300; line-height: 1.1;
+    color: var(--cream);
+    opacity: 0; animation: fadeUp .8s 1s forwards;
+  }
+  .hero-h1 em { font-style: italic; color: var(--gold); }
+  .hero-sub {
+    font-size: 1rem; line-height: 1.8; color: rgba(253,247,240,.6);
+    margin: 28px 0 44px;
+    opacity: 0; animation: fadeUp .8s 1.2s forwards;
+  }
+  .hero-btns { display:flex; gap:20px; flex-wrap:wrap; opacity:0; animation: fadeUp .8s 1.4s forwards; }
+  .btn-primary {
+    padding: 15px 38px; background: var(--rose); color: var(--white);
+    font-size: .82rem; letter-spacing: .15em; text-transform: uppercase;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: background .3s, transform .2s;
+  }
+  .btn-primary:hover { background: var(--rose-dark); transform: translateY(-2px); }
+  .btn-outline {
+    padding: 15px 38px; border: 1px solid rgba(253,247,240,.4);
+    color: var(--cream); font-size: .82rem; letter-spacing: .15em;
+    text-transform: uppercase; text-decoration: none; cursor: pointer;
+    transition: all .3s; background: transparent;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* hero scroll indicator */
+  .scroll-ind {
+    position: absolute; bottom: 40px; left: 80px; z-index:2;
+    display: flex; align-items: center; gap: 12px;
+    font-size: .7rem; letter-spacing: .25em; text-transform: uppercase;
+    color: rgba(253,247,240,.4);
+    opacity: 0; animation: fadeUp .8s 1.6s forwards;
+  }
+  .scroll-ind::before {
+    content:''; display:block; width:1px; height:40px;
+    background: linear-gradient(to bottom, transparent, var(--gold));
+    animation: scrollLine 2s 2s infinite;
+  }
+  @keyframes scrollLine { 0%,100%{opacity:.3} 50%{opacity:1} }
+
+  /* ── STATS BAND ── */
+  .stats-band {
+    background: var(--charcoal); padding: 48px 80px;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+  .stat-item {
+    text-align: center; padding: 0 20px;
+    border-right: 1px solid rgba(255,255,255,.08);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem; font-weight: 300; color: var(--gold);
+    line-height: 1;
+  }
+  .stat-label { font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(253,247,240,.45); margin-top: 8px; }
+
+  /* ── SECTIONS shared ── */
+  section { padding: 120px 80px; }
+  .section-tag {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-size: .72rem; letter-spacing: .3em; text-transform: uppercase;
+    color: var(--rose); margin-bottom: 20px;
+  }
+  .section-tag::before { content:''; display:block; width:28px; height:1px; background:var(--rose); }
+  .section-h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 4vw, 3.4rem); font-weight: 300; line-height: 1.2;
+    color: var(--charcoal);
+  }
+  .section-h2 em { font-style: italic; color: var(--rose); }
+
+  /* ── ABOUT ── */
+  #about { background: var(--white); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-top: 60px; }
+  .about-img-wrap {
+    position: relative; height: 560px;
+  }
+  .about-img-main {
+    width: 80%; height: 100%;
+    background: linear-gradient(145deg, #c9906a33 0%, #d4aa7033 100%);
+    position: relative; overflow: hidden;
+  }
+  .about-img-main img { width:100%; height:100%; object-fit:cover; }
+  .about-img-float {
+    position: absolute; bottom: -40px; right: 0;
+    width: 55%; height: 260px;
+    background: var(--charcoal);
+    display: flex; align-items: center; justify-content: center; flex-direction: column;
+    gap: 10px; padding: 30px;
+  }
+  .about-img-float .num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem; font-weight: 300; color: var(--gold); line-height: 1;
+  }
+  .about-img-float .lbl { font-size: .7rem; letter-spacing: .2em; text-transform:uppercase; color:rgba(253,247,240,.5); text-align:center; }
+  .about-text p { font-size: 1.05rem; line-height: 1.9; color: var(--muted); margin-bottom: 20px; }
+  .about-features { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 36px; }
+  .af-item { display:flex; align-items:flex-start; gap:14px; }
+  .af-icon { width:40px; height:40px; flex-shrink:0; background:var(--warm); display:flex; align-items:center; justify-content:center; color:var(--rose); font-size:.95rem; }
+  .af-label { font-size:.88rem; letter-spacing:.05em; color:var(--charcoal); font-weight:500; }
+  .af-sub { font-size:.78rem; color:var(--muted); margin-top:4px; }
+
+  /* ── SERVICES ── */
+  #services { background: var(--cream); }
+  .services-intro { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:60px; }
+  .services-intro p { max-width:380px; font-size:1rem; line-height:1.8; color:var(--muted); }
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .svc-card {
+    background: var(--white); padding: 44px 36px;
+    position: relative; overflow: hidden;
+    transition: transform .3s ease, box-shadow .3s ease;
+    cursor: pointer;
+  }
+  .svc-card::before {
+    content:''; position:absolute; bottom:0; left:0;
+    width:100%; height:3px; background:var(--rose);
+    transform:scaleX(0); transform-origin:left;
+    transition:transform .4s ease;
+  }
+  .svc-card:hover::before { transform:scaleX(1); }
+  .svc-card:hover { transform:translateY(-6px); box-shadow:0 24px 60px rgba(43,35,32,.1); }
+  .svc-num { font-family:'Cormorant Garamond',serif; font-size:4rem; font-weight:300; color:var(--warm); line-height:1; margin-bottom:16px; }
+  .svc-icon { font-size:1.6rem; color:var(--rose); margin-bottom:20px; }
+  .svc-title { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:400; color:var(--charcoal); margin-bottom:14px; }
+  .svc-desc { font-size:.88rem; line-height:1.8; color:var(--muted); }
+  .svc-link { display:inline-flex; align-items:center; gap:8px; margin-top:22px; font-size:.75rem; letter-spacing:.15em; text-transform:uppercase; color:var(--rose); text-decoration:none; transition:gap .3s; }
+  .svc-link:hover { gap:14px; }
+
+  /* ── WHY US ── */
+  #why {
+    background: var(--charcoal);
+    position: relative; overflow: hidden;
+    padding: 120px 80px;
+  }
+  #why::before {
+    content:'';position:absolute;top:-200px;right:-200px;
+    width:600px;height:600px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(212,170,112,.07) 0%, transparent 70%);
+  }
+  #why .section-h2 { color:var(--cream); }
+  .why-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; margin-top:60px; align-items:center; }
+  .why-cards { display:flex; flex-direction:column; gap:28px; }
+  .why-card {
+    display:flex; gap:24px; align-items:flex-start;
+    padding:28px; border:1px solid rgba(255,255,255,.06);
+    transition:border-color .3s, background .3s;
+  }
+  .why-card:hover { border-color:rgba(212,170,112,.25); background:rgba(212,170,112,.04); }
+  .why-icon { width:48px; height:48px; flex-shrink:0; background:rgba(201,144,106,.15); display:flex; align-items:center; justify-content:center; color:var(--gold); font-size:1.1rem; }
+  .why-text h4 { font-family:'Cormorant Garamond',serif; font-size:1.25rem; color:var(--cream); margin-bottom:8px; }
+  .why-text p { font-size:.88rem; line-height:1.7; color:rgba(253,247,240,.45); }
+  .why-visual {
+    height:460px; position:relative;
+    background: linear-gradient(160deg, #3d2f28 0%, #5a3e34 100%);
+    display:flex; align-items:flex-end;
+    padding:40px;
+  }
+  .why-visual-inner { position:relative; z-index:2; }
+  .why-visual-inner h3 { font-family:'Cormorant Garamond',serif; font-size:2rem; font-weight:300; color:var(--cream); margin-bottom:12px; }
+  .why-visual-inner p { font-size:.88rem; color:rgba(253,247,240,.5); line-height:1.7; }
+  .why-visual::before {
+    content:''; position:absolute; top:30px; left:30px; right:30px; bottom:30px;
+    border:1px solid rgba(212,170,112,.2);
+  }
+
+  /* ── GALLERY ── */
+  #gallery { background: var(--white); }
+  .gallery-header { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:48px; }
+  .gallery-grid {
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    grid-template-rows:auto auto;
+    gap:6px;
+  }
+  .g-item {
+    overflow:hidden; position:relative; background:var(--warm);
+    aspect-ratio:1;
+    cursor:pointer;
+  }
+  .g-item:first-child { grid-column:span 2; grid-row:span 2; aspect-ratio:unset; }
+  .g-item::after {
+    content:attr(data-label);
+    position:absolute; inset:0;
+    background:rgba(43,35,32,.55);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Cormorant Garamond',serif; font-size:1.2rem; font-weight:300;
+    color:var(--cream); letter-spacing:.1em;
+    opacity:0; transition:opacity .4s;
+  }
+  .g-item:hover::after { opacity:1; }
+  .g-inner { width:100%; height:100%; transition:transform .6s ease; display:flex; align-items:center; justify-content:center; }
+  .g-item:hover .g-inner { transform:scale(1.06); }
+  .g-emoji { font-size:4rem; opacity:.3; }
+
+  /* gallery placeholder colors */
+  .g-item:nth-child(1) { background:linear-gradient(135deg,#e8d5c4,#c9906a33); }
+  .g-item:nth-child(2) { background:linear-gradient(135deg,#d4c4b8,#b8906855); }
+  .g-item:nth-child(3) { background:linear-gradient(135deg,#c4b8ae,#a07858); }
+  .g-item:nth-child(4) { background:linear-gradient(135deg,#e0cfc4,#c09070); }
+  .g-item:nth-child(5) { background:linear-gradient(135deg,#d8c8b8,#b88860); }
+  .g-item:nth-child(6) { background:linear-gradient(135deg,#cdbfb3,#a87850); }
+
+  /* ── TESTIMONIALS ── */
+  #testimonials { background: var(--warm); }
+  .testi-header { text-align:center; margin-bottom:64px; }
+  .testi-header .section-tag { justify-content:center; }
+  .testi-header .section-tag::before { display:none; }
+  .testi-header .section-tag::after { content:''; display:block; width:28px; height:1px; background:var(--rose); }
+  .testi-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
+  .testi-card {
+    background:var(--white); padding:44px 36px;
+    position:relative;
+  }
+  .testi-card::before {
+    content:'"'; position:absolute; top:24px; right:30px;
+    font-family:'Cormorant Garamond',serif; font-size:6rem; font-weight:300;
+    color:var(--warm); line-height:1;
+  }
+  .stars { color:var(--gold); font-size:.85rem; margin-bottom:20px; letter-spacing:3px; }
+  .testi-text { font-size:.95rem; line-height:1.8; color:var(--muted); font-style:italic; margin-bottom:28px; }
+  .testi-author { display:flex; align-items:center; gap:14px; }
+  .testi-avatar { width:44px; height:44px; border-radius:50%; background:var(--warm); display:flex; align-items:center; justify-content:center; font-size:1.1rem; }
+  .testi-name { font-weight:500; font-size:.9rem; color:var(--charcoal); }
+  .testi-role { font-size:.78rem; color:var(--muted); }
+
+  /* ── BOOKING ── */
+  #booking {
+    background: linear-gradient(135deg, #2b2320 0%, #3d2f28 100%);
+    padding: 100px 80px;
+    display: flex; gap: 80px; align-items: flex-start;
+  }
+  .booking-left { flex: 1; }
+  .booking-left .section-h2 { color:var(--cream); margin-bottom:20px; }
+  .booking-left p { font-size:1rem; line-height:1.8; color:rgba(253,247,240,.5); margin-bottom:36px; }
+  .booking-contact-items { display:flex; flex-direction:column; gap:20px; }
+  .bc-item { display:flex; align-items:center; gap:16px; }
+  .bc-icon { width:42px; height:42px; border:1px solid rgba(212,170,112,.3); display:flex; align-items:center; justify-content:center; color:var(--gold); font-size:.9rem; flex-shrink:0; }
+  .bc-label { font-size:.72rem; letter-spacing:.15em; text-transform:uppercase; color:rgba(253,247,240,.35); }
+  .bc-val { font-size:.95rem; color:var(--cream); margin-top:3px; }
+  .booking-form { flex:1; }
+  .form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px; }
+  .form-group { display:flex; flex-direction:column; gap:8px; margin-bottom:16px; }
+  .form-group label { font-size:.72rem; letter-spacing:.15em; text-transform:uppercase; color:rgba(253,247,240,.45); }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.1);
+    color:var(--cream); font-family:'Jost',sans-serif; font-size:.92rem;
+    padding:14px 18px; outline:none;
+    transition:border-color .3s;
+    appearance:none; -webkit-appearance:none;
+  }
+  .form-group select option { background:var(--charcoal); }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color:var(--gold); }
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color:rgba(253,247,240,.3); }
+  .form-group textarea { resize:vertical; min-height:100px; }
+  .btn-submit {
+    width:100%; padding:16px; background:var(--rose);
+    color:var(--white); font-family:'Jost',sans-serif;
+    font-size:.82rem; letter-spacing:.2em; text-transform:uppercase;
+    border:none; cursor:pointer; transition:background .3s, transform .2s;
+  }
+  .btn-submit:hover { background:var(--rose-dark); transform:translateY(-2px); }
+
+  /* form success */
+  .form-success { display:none; text-align:center; padding:40px; }
+  .form-success i { font-size:2.5rem; color:var(--gold); margin-bottom:16px; display:block; }
+  .form-success h4 { font-family:'Cormorant Garamond',serif; font-size:1.5rem; color:var(--cream); margin-bottom:10px; }
+  .form-success p { font-size:.9rem; color:rgba(253,247,240,.5); }
+
+  /* ── MAP PLACEHOLDER ── */
+  #map-section { background: var(--cream); padding: 0; }
+  .map-wrap {
+    height: 360px;
+    background: linear-gradient(135deg, #e8d5c4 0%, #d4c4b8 100%);
+    display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 16px;
+    position: relative; overflow: hidden;
+  }
+  .map-wrap::before {
+    content:''; position:absolute; inset:0;
+    background: repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(201,144,106,.05) 40px, rgba(201,144,106,.05) 80px);
+  }
+  .map-wrap i { font-size:2.5rem; color:var(--rose); position:relative; z-index:1; }
+  .map-wrap p { font-family:'Cormorant Garamond',serif; font-size:1.4rem; color:var(--charcoal); position:relative; z-index:1; }
+  .map-wrap small { font-size:.8rem; color:var(--muted); position:relative; z-index:1; letter-spacing:.1em; }
+
+  /* ── FOOTER ── */
+  footer { background:var(--charcoal); padding:80px 80px 40px; }
+  .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:60px; margin-bottom:60px; }
+  .footer-brand .logo { font-family:'Cormorant Garamond',serif; font-size:1.8rem; font-weight:300; color:var(--cream); letter-spacing:.2em; margin-bottom:18px; }
+  .footer-brand .logo span { color:var(--gold); }
+  .footer-brand p { font-size:.88rem; line-height:1.8; color:rgba(253,247,240,.4); }
+  .social-links { display:flex; gap:14px; margin-top:28px; }
+  .social-links a {
+    width:38px; height:38px; border:1px solid rgba(255,255,255,.12);
+    display:flex; align-items:center; justify-content:center;
+    color:rgba(253,247,240,.4); font-size:.85rem; text-decoration:none;
+    transition:all .3s;
+  }
+  .social-links a:hover { border-color:var(--gold); color:var(--gold); }
+  .footer-col h5 { font-size:.72rem; letter-spacing:.25em; text-transform:uppercase; color:rgba(253,247,240,.3); margin-bottom:24px; }
+  .footer-col ul { list-style:none; display:flex; flex-direction:column; gap:12px; }
+  .footer-col ul li a { font-size:.88rem; color:rgba(253,247,240,.5); text-decoration:none; transition:color .3s; }
+  .footer-col ul li a:hover { color:var(--gold); }
+  .footer-hours { font-size:.85rem; color:rgba(253,247,240,.5); line-height:2; }
+  .footer-bottom { border-top:1px solid rgba(255,255,255,.07); padding-top:28px; display:flex; justify-content:space-between; align-items:center; }
+  .footer-bottom p { font-size:.78rem; color:rgba(253,247,240,.3); }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal { opacity:0; transform:translateY(40px); transition:opacity .8s ease, transform .8s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+  .reveal-left { opacity:0; transform:translateX(-40px); transition:opacity .8s ease, transform .8s ease; }
+  .reveal-left.visible { opacity:1; transform:translateX(0); }
+  .reveal-right { opacity:0; transform:translateX(40px); transition:opacity .8s ease, transform .8s ease; }
+  .reveal-right.visible { opacity:1; transform:translateX(0); }
+
+  /* ── MOBILE NAV MENU ── */
+  .mobile-nav {
+    position:fixed; inset:0; background:var(--charcoal); z-index:999;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:36px;
+    transform:translateX(100%); transition:transform .4s ease;
+  }
+  .mobile-nav.open { transform:translateX(0); }
+  .mobile-nav a { font-family:'Cormorant Garamond',serif; font-size:2.2rem; font-weight:300; color:var(--cream); text-decoration:none; letter-spacing:.1em; transition:color .3s; }
+  .mobile-nav a:hover { color:var(--gold); }
+  .mobile-close { position:absolute; top:28px; right:28px; background:none; border:none; color:var(--cream); font-size:1.4rem; cursor:pointer; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width:1024px) {
+    nav, section, #booking { padding-left:40px; padding-right:40px; }
+    nav.scrolled { padding-left:40px; padding-right:40px; }
+    .stats-band { padding:40px; }
+    .about-grid { grid-template-columns:1fr; gap:60px; }
+    .about-img-wrap { height:380px; }
+    .services-grid { grid-template-columns:repeat(2,1fr); }
+    .testi-grid { grid-template-columns:1fr 1fr; }
+    .footer-grid { grid-template-columns:1fr 1fr; gap:40px; }
+    #booking { flex-direction:column; }
+    .gallery-grid { grid-template-columns:repeat(2,1fr); }
+    .g-item:first-child { grid-column:span 2; }
+  }
+  @media (max-width:768px) {
+    nav { padding:18px 24px; }
+    nav.scrolled { padding:14px 24px; }
+    .hero-content { padding:0 24px; }
+    .scroll-ind { left:24px; }
+    section { padding:80px 24px; }
+    #booking { padding:80px 24px; }
+    .stats-band { grid-template-columns:repeat(2,1fr); padding:40px 24px; gap:28px; }
+    .stat-item:nth-child(2) { border-right:none; }
+    .services-grid { grid-template-columns:1fr; }
+    .services-intro { flex-direction:column; gap:20px; align-items:flex-start; }
+    .testi-grid { grid-template-columns:1fr; }
+    .why-grid { grid-template-columns:1fr; }
+    .gallery-header { flex-direction:column; gap:20px; align-items:flex-start; }
+    .footer-grid { grid-template-columns:1fr; gap:36px; }
+    .footer { padding:60px 24px 32px; }
+    .footer-bottom { flex-direction:column; gap:12px; text-align:center; }
+    .nav-links, .nav-cta { display:none; }
+    .hamburger { display:flex; }
+    .form-row { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- PRELOADER -->
+<div id="preloader">
+  <div class="logo-pre">MAYA</div>
+  <div class="bar"></div>
+</div>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-close" id="mobileClose"><i class="fas fa-times"></i></button>
+  <a href="#about" onclick="closeMobile()">About</a>
+  <a href="#services" onclick="closeMobile()">Services</a>
+  <a href="#gallery" onclick="closeMobile()">Gallery</a>
+  <a href="#testimonials" onclick="closeMobile()">Reviews</a>
+  <a href="#booking" onclick="closeMobile()">Book Now</a>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">MAYA <span>✦</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+  </ul>
+  <a href="#booking" class="nav-cta">Book Appointment</a>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-circle hc1"></div>
+  <div class="hero-circle hc2"></div>
+  <div class="hero-circle hc3"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Welcome to Maya Beauty Salon</div>
+    <h1 class="hero-h1">Where Beauty<br/>Meets <em>Artistry</em></h1>
+    <p class="hero-sub">A sanctuary of elegance offering premium beauty, hair & bridal services. Every treatment crafted with passion, precision & the finest products.</p>
+    <div class="hero-btns">
+      <a href="#booking" class="btn-primary">Book an Appointment</a>
+      <a href="#services" class="btn-outline">Explore Services</a>
+    </div>
+  </div>
+  <div class="scroll-ind">Scroll to explore</div>
+</section>
+
+<!-- STATS -->
+<div class="stats-band reveal">
+  <div class="stat-item">
+    <div class="stat-num" data-target="15">0</div>
+    <div class="stat-label">Years of Excellence</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num" data-target="5000">0</div>
+    <div class="stat-label">Happy Clients</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num" data-target="30">0</div>
+    <div class="stat-label">Expert Services</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num" data-target="98">0</div>
+    <div class="stat-label">% Satisfaction Rate</div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-img-wrap reveal-left">
+      <div class="about-img-main">
+        <div style="width:100%;height:100%;background:linear-gradient(145deg,#e8d5c4 0%,#c9906a44 100%);display:flex;align-items:center;justify-content:center;font-size:8rem;opacity:.35;">🪷</div>
+      </div>
+      <div class="about-img-float">
+        <div class="num">15+</div>
+        <div class="lbl">Years of Expertise<br/>in Beauty & Wellness</div>
+      </div>
+    </div>
+    <div class="about-text reveal-right">
+      <div class="section-tag">Our Story</div>
+      <h2 class="section-h2">An <em>Exclusive</em> Place to Pamper Your Body & Soul</h2>
+      <p style="margin-top:24px;">Maya Beauty Salon is where luxury meets care. We believe that true beauty radiates from within — and our role is to nurture, enhance, and celebrate that beauty in every client who walks through our doors.</p>
+      <p>From rejuvenating skin treatments to breathtaking bridal transformations, our team of certified experts brings artistry and science together. We use only the finest cosmetic brands — including Lakmé, Revlon, MAC, Christian Dior, and more — ensuring every result is nothing short of spectacular.</p>
+      <div class="about-features">
+        <div class="af-item">
+          <div class="af-icon"><i class="fas fa-leaf"></i></div>
+          <div>
+            <div class="af-label">Natural Treatments</div>
+            <div class="af-sub">Gentle on skin, powerful in results</div>
+          </div>
+        </div>
+        <div class="af-item">
+          <div class="af-icon"><i class="fas fa-certificate"></i></div>
+          <div>
+            <div class="af-label">Certified Experts</div>
+            <div class="af-sub">Trained, skilled & passionate</div>
+          </div>
+        </div>
+        <div class="af-item">
+          <div class="af-icon"><i class="fas fa-heart"></i></div>
+          <div>
+            <div class="af-label">Personalized Care</div>
+            <div class="af-sub">Tailored to your unique needs</div>
+          </div>
+        </div>
+        <div class="af-item">
+          <div class="af-icon"><i class="fas fa-shield-alt"></i></div>
+          <div>
+            <div class="af-label">Hygiene First</div>
+            <div class="af-sub">Impeccable cleanliness standards</div>
+          </div>
+        </div>
+      </div>
+      <a href="#booking" class="btn-primary" style="display:inline-block;margin-top:40px;">Meet Our Team</a>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-intro reveal">
+    <div>
+      <div class="section-tag">What We Offer</div>
+      <h2 class="section-h2">Our Premium <em>Services</em></h2>
+    </div>
+    <p>Every service at Maya is a ritual — a blend of technique, luxury products, and genuine care to make you look and feel extraordinary.</p>
+  </div>
+  <div class="services-grid">
+    <div class="svc-card reveal">
+      <div class="svc-num">01</div>
+      <div class="svc-icon"><i class="fas fa-spa"></i></div>
+      <h3 class="svc-title">Facial Treatments</h3>
+      <p class="svc-desc">Deep cleansing, anti-aging, brightening & specialized facials. From gold facials to fruit enzyme peels — rejuvenate your skin with expert care.</p>
+      <a href="#booking" class="svc-link">Book Now <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="svc-card reveal">
+      <div class="svc-num">02</div>
+      <div class="svc-icon"><i class="fas fa-ring"></i></div>
+      <h3 class="svc-title">Bridal & Pre-Bridal</h3>
+      <p class="svc-desc">Your wedding day deserves nothing less than perfection. Our bridal packages include full makeup, skin prep, and trials to ensure you shine.</p>
+      <a href="#booking" class="svc-link">Book Now <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="svc-card reveal">
+      <div class="svc-num">03</div>
+      <div class="svc-icon"><i class="fas fa-cut"></i></div>
+      <h3 class="svc-title">Hair Styling & Care</h3>
+      <p class="svc-desc">Cuts, coloring, highlights, perming, keratin treatment & more. Our stylists craft looks that are as unique as you are.</p>
+      <a href="#booking" class="svc-link">Book Now <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="svc-card reveal">
+      <div class="svc-num">04</div>
+      <div class="svc-icon"><i class="fas fa-hand-sparkles"></i></div>
+      <h3 class="svc-title">Manicure & Pedicure</h3>
+      <p class="svc-desc">Treat your hands and feet to a well-deserved vacation. Classic, gel, French, nail art — we do it all with exceptional finesse.</p>
+      <a href="#booking" class="svc-link">Book Now <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="svc-card reveal">
+      <div class="svc-num">05</div>
+      <div class="svc-icon"><i class="fas fa-hot-tub"></i></div>
+      <h3 class="svc-title">Beauty Spa & Relaxation</h3>
+      <p class="svc-desc">Relaxation and enjoyment make you a different, happier person. Experience our body wraps, aromatherapy & relaxation therapies.</p>
+      <a href="#booking" class="svc-link">Book Now <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="svc-card reveal">
+      <div class="svc-num">06</div>
+      <div class="svc-icon"><i class="fas fa-star"></i></div>
+      <h3 class="svc-title">Waxing & Threading</h3>
+      <p class="svc-desc">Quick, precise & gentle hair removal services using premium-quality wax and expert threading techniques for silky-smooth skin.</p>
+      <a href="#booking" class="svc-link">Book Now <i class="fas fa-arrow-right"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="section-tag" style="color:var(--gold);">
+    <span style="display:block;width:28px;height:1px;background:var(--gold);"></span>
+    Why Choose Maya
+  </div>
+  <h2 class="section-h2">The <em style="color:var(--gold);">Maya</em> Difference</h2>
+  <div class="why-grid">
+    <div class="why-cards">
+      <div class="why-card reveal">
+        <div class="why-icon"><i class="fas fa-award"></i></div>
+        <div class="why-text">
+          <h4>Award-Winning Expertise</h4>
+          <p>Our beauticians are trained at India's premier beauty institutes and certified in international techniques, bringing world-class skills to every appointment.</p>
+        </div>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon"><i class="fas fa-flask"></i></div>
+        <div class="why-text">
+          <h4>Premium Product Brands</h4>
+          <p>We exclusively use renowned cosmetic brands — Lakmé, MAC, Revlon, Christian Dior, Kryolan — for results that are beautiful and lasting.</p>
+        </div>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon"><i class="fas fa-clock"></i></div>
+        <div class="why-text">
+          <h4>Flexible Timing & VIP Service</h4>
+          <p>Open 7 days a week with early morning and late evening slots. Our VIP members receive priority booking and exclusive treatment access.</p>
+        </div>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon"><i class="fas fa-leaf"></i></div>
+        <div class="why-text">
+          <h4>100% Natural Treatments</h4>
+          <p>All our treatments are formulated to be gentle yet effective, using natural ingredients wherever possible for healthier, glowing skin.</p>
+        </div>
+      </div>
+    </div>
+    <div class="why-visual reveal-right">
+      <div class="why-visual-inner">
+        <h3>Experience Beauty,<br/>Feel the Difference</h3>
+        <p>From the moment you arrive, every detail at Maya is designed to make you feel valued, relaxed, and absolutely beautiful.</p>
+        <a href="#booking" class="btn-primary" style="display:inline-block;margin-top:28px;">Reserve Your Spot</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="gallery-header">
+    <div>
+      <div class="section-tag">Our Work</div>
+      <h2 class="section-h2">Beauty in <em>Every Frame</em></h2>
+    </div>
+    <a href="#booking" class="btn-outline" style="border-color:var(--rose);color:var(--rose);">View Full Gallery</a>
+  </div>
+  <div class="gallery-grid reveal">
+    <div class="g-item" data-label="Bridal Makeup"><div class="g-inner"><div class="g-emoji">👰</div></div></div>
+    <div class="g-item" data-label="Hair Styling"><div class="g-inner"><div class="g-emoji">✂️</div></div></div>
+    <div class="g-item" data-label="Facial Care"><div class="g-inner"><div class="g-emoji">🧖‍♀️</div></div></div>
+    <div class="g-item" data-label="Nail Art"><div class="g-inner"><div class="g-emoji">💅</div></div></div>
+    <div class="g-item" data-label="Spa Treatment"><div class="g-inner"><div class="g-emoji">🛁</div></div></div>
+    <div class="g-item" data-label="Party Makeup"><div class="g-inner"><div class="g-emoji">💄</div></div></div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="testi-header reveal">
+    <div class="section-tag">Happy Clients</div>
+    <h2 class="section-h2" style="margin-top:8px;">Words That <em>Inspire Us</em></h2>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">"Maya Beauty Salon made my wedding day truly magical. The bridal makeup was flawless — exactly what I'd dreamed of. The team is so professional and caring. I wouldn't trust anyone else."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">👰</div>
+        <div><div class="testi-name">Priya Sharma</div><div class="testi-role">Bridal Client</div></div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">"I've been coming here for facials every month and my skin has transformed completely. The products they use are top-notch and the staff remembers exactly what my skin needs."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">🌸</div>
+        <div><div class="testi-name">Ananya Patel</div><div class="testi-role">Regular Client</div></div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">"The hair spa and treatment I received here was absolutely divine. My hair is softer and shinier than it's ever been. The ambiance is luxurious and the team is simply outstanding."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">💇‍♀️</div>
+        <div><div class="testi-name">Ritu Agarwal</div><div class="testi-role">Hair Treatment Client</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<div id="booking">
+  <div class="booking-left reveal-left">
+    <div class="section-tag" style="color:var(--gold);">
+      <span style="display:block;width:28px;height:1px;background:var(--gold);"></span>
+      Get in Touch
+    </div>
+    <h2 class="section-h2">Book Your <em style="color:var(--gold);">Appointment</em></h2>
+    <p>Ready to experience the Maya difference? Reach out to us — we'd love to make you feel extraordinary.</p>
+    <div class="booking-contact-items">
+      <div class="bc-item">
+        <div class="bc-icon"><i class="fas fa-map-marker-alt"></i></div>
+        <div>
+          <div class="bc-label">Our Location</div>
+          <div class="bc-val">Address will be updated soon</div>
+        </div>
+      </div>
+      <div class="bc-item">
+        <div class="bc-icon"><i class="fas fa-phone"></i></div>
+        <div>
+          <div class="bc-label">Phone / WhatsApp</div>
+          <div class="bc-val">+00 00000 00000</div>
+        </div>
+      </div>
+      <div class="bc-item">
+        <div class="bc-icon"><i class="fas fa-envelope"></i></div>
+        <div>
+          <div class="bc-label">Email</div>
+          <div class="bc-val">hello@mayabeautysalon.com</div>
+        </div>
+      </div>
+      <div class="bc-item">
+        <div class="bc-icon"><i class="fas fa-clock"></i></div>
+        <div>
+          <div class="bc-label">Working Hours</div>
+          <div class="bc-val">Mon – Sun: 9:00 AM – 8:00 PM</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="booking-form reveal-right">
+    <div id="bookingFormWrap">
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" placeholder="Your first name" />
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" placeholder="Your last name" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="tel" placeholder="+91 00000 00000" />
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="your@email.com" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Service Required</label>
+        <select>
+          <option value="">Select a service…</option>
+          <option>Facial Treatment</option>
+          <option>Bridal / Pre-Bridal Makeup</option>
+          <option>Hair Styling & Care</option>
+          <option>Manicure & Pedicure</option>
+          <option>Beauty Spa & Relaxation</option>
+          <option>Waxing & Threading</option>
+          <option>Party Makeup</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Preferred Date</label>
+          <input type="date" />
+        </div>
+        <div class="form-group">
+          <label>Preferred Time</label>
+          <select>
+            <option value="">Select time…</option>
+            <option>9:00 AM</option><option>10:00 AM</option>
+            <option>11:00 AM</option><option>12:00 PM</option>
+            <option>1:00 PM</option><option>2:00 PM</option>
+            <option>3:00 PM</option><option>4:00 PM</option>
+            <option>5:00 PM</option><option>6:00 PM</option>
+            <option>7:00 PM</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Special Requests</label>
+        <textarea placeholder="Any special requests or questions…"></textarea>
+      </div>
+      <button class="btn-submit" onclick="submitForm()">Confirm Appointment <i class="fas fa-arrow-right" style="margin-left:8px;"></i></button>
+    </div>
+    <div class="form-success" id="formSuccess">
+      <i class="fas fa-check-circle"></i>
+      <h4>Appointment Request Sent!</h4>
+      <p>Thank you! Our team will contact you within 24 hours to confirm your appointment.</p>
+    </div>
+  </div>
+</div>
+
+<!-- MAP -->
+<div id="map-section">
+  <div class="map-wrap">
+    <i class="fas fa-map-marker-alt"></i>
+    <p>Maya Beauty Salon — Location</p>
+    <small>Address will be updated soon</small>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">MAYA <span>✦</span></div>
+      <p>An exclusive sanctuary where you pamper your body in harmony. We deal with every aspect of beauty — skin care, hair care & total wellness. All treatments done at Maya are natural and personalized.</p>
+      <div class="social-links">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-whatsapp"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+        <a href="#"><i class="fab fa-pinterest"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Quick Links</h5>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#services">Our Services</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+        <li><a href="#booking">Contact Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Services</h5>
+      <ul>
+        <li><a href="#services">Facial Treatments</a></li>
+        <li><a href="#services">Bridal Makeup</a></li>
+        <li><a href="#services">Hair Styling</a></li>
+        <li><a href="#services">Manicure & Pedicure</a></li>
+        <li><a href="#services">Spa & Relaxation</a></li>
+        <li><a href="#services">Waxing & Threading</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Working Hours</h5>
+      <div class="footer-hours">
+        Monday – Friday<br/><span style="color:var(--gold);">9:00 AM – 8:00 PM</span><br/><br/>
+        Saturday – Sunday<br/><span style="color:var(--gold);">9:00 AM – 7:00 PM</span><br/><br/>
+        <span style="color:rgba(253,247,240,.3);font-size:.78rem;">Walk-ins welcome. Appointments preferred.</span>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Maya Beauty Salon. All rights reserved.</p>
+    <p style="color:rgba(253,247,240,.2);">Crafted with ♥</p>
+  </div>
+</footer>
+
+<script>
+// ── PRELOADER
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('preloader').classList.add('hide');
+    setTimeout(() => document.getElementById('preloader').remove(), 700);
+  }, 1800);
+});
+
+// ── CURSOR
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+  setTimeout(() => {
+    ring.style.left = e.clientX + 'px';
+    ring.style.top = e.clientY + 'px';
+  }, 80);
+});
+document.querySelectorAll('a, button').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.width = '6px'; cursor.style.height = '6px';
+    ring.style.width = '52px'; ring.style.height = '52px';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.width = '12px'; cursor.style.height = '12px';
+    ring.style.width = '36px'; ring.style.height = '36px';
+  });
+});
+
+// ── NAV SCROLL
+const nav = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// ── MOBILE NAV
+document.getElementById('hamburger').addEventListener('click', () => document.getElementById('mobileNav').classList.add('open'));
+document.getElementById('mobileClose').addEventListener('click', () => document.getElementById('mobileNav').classList.remove('open'));
+function closeMobile() { document.getElementById('mobileNav').classList.remove('open'); }
+
+// ── SCROLL REVEAL
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
+
+// ── COUNTER ANIMATION
+function animateCount(el, target, suffix='') {
+  let current = 0;
+  const step = Math.ceil(target / 60);
+  const timer = setInterval(() => {
+    current += step;
+    if (current >= target) { current = target; clearInterval(timer); }
+    el.textContent = current.toLocaleString() + suffix;
+  }, 28);
+}
+const statsObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      document.querySelectorAll('.stat-num').forEach(el => {
+        const t = parseInt(el.dataset.target);
+        animateCount(el, t, el.dataset.target === '98' ? '%' : (el.dataset.target === '5000' ? '+' : '+'));
+      });
+      statsObs.disconnect();
+    }
+  });
+}, { threshold: 0.5 });
+const statsBand = document.querySelector('.stats-band');
+if (statsBand) statsObs.observe(statsBand);
+
+// ── FORM SUBMIT
+function submitForm() {
+  document.getElementById('bookingFormWrap').style.display = 'none';
+  document.getElementById('formSuccess').style.display = 'block';
+}
+</script>
+</body>
+</html>
